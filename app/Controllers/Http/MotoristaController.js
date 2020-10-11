@@ -1,10 +1,9 @@
 'use strict'
 
+const User = require("../../Models/User")
 class MotoristaController {
-    index ({ request, response }) {
-        let args = request.get('1')  
-        response.send(args)        
-       
+    async index () {
+        return await User.motoristas()
     }
 }
 

@@ -5,10 +5,10 @@ const Hash = use('Hash')
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Model = use('Model')
-
+const PAPEL_MOTORISTA = 1;
+const  PAPEL_USUARIO = 2;
 class User extends Model {
-  PAPEL_MOTORISTA = 1;
-  PAPEL_USUARIO = 2;
+  
 
   static boot () {
     super.boot()
@@ -45,7 +45,23 @@ class User extends Model {
   viagens () {
     return this.hasMany('App/Models/Viagem')
   }
- 
+
+  static scopeClientes (query) {
+    return  query.where('role', PAPEL_USUARIO)
+
+  }
+  static scopeMotoristas (query) {
+    return query.where('role', PAPEL_MOTORISTA)
+  }
+  static async clientes () {
+    return await User.query().where('role', PAPEL_USUARIO).fetch()
+
+  }
+  static async motoristas () {
+    return await User.query().where('role', PAPEL_MOTORISTA).fetch()
+  }
 }
+ 
+
 
 module.exports = User

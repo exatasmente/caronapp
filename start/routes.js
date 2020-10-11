@@ -21,4 +21,10 @@ Route.get('/test', ({ request, response, view }) => {
     return 'Ola';
 
   })
-Route.get('motoristas', 'MotoristaController.index')
+Route.get('motorista', 'MotoristaController.index')
+Route.get('veiculo/', 'VeiculoController.index')
+Route.get('veiculo/criar', 'VeiculoController.store')
+
+
+Route.get('user/criar', 'UsuarioController.store')
+Route.get('cliente', 'UsuarioController.index')

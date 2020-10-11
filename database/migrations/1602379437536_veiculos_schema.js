@@ -11,10 +11,10 @@ class VeiculosSchema extends Schema {
       table.string("modelo")
       table.string("placa")
       table.integer("lugares")
-      table.bigInteger('user_id')
+      table.integer('user_id')
         .references('id')
-        .inTable('users'
-        )
+        .inTable('users')
+        .unsigned()
       table.timestamps()
     })
   }
