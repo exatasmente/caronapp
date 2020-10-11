@@ -2,3 +2,4 @@
 database/development.sqlite
 node_modules
 front/node_modules
+.idea
