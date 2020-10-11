@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "main.css": "./react/static/css/main.c39f0d8e.chunk.css",
   "main.js": "./react/static/js/main.d5c046a0.chunk.js",
   "main.js.map": "./react/static/js/main.d5c046a0.chunk.js.map",
@@ -10,5 +11,17 @@
   "static/css/main.c39f0d8e.chunk.css.map": "./react/static/css/main.c39f0d8e.chunk.css.map",
   "index.html": "./react/index.html",
   "precache-manifest.408ed7d3a43025f4a32bb026f98b3354.js": "./react/precache-manifest.408ed7d3a43025f4a32bb026f98b3354.js",
+=======
+  "main.css": "./react/static/css/main.7fd6f7b6.chunk.css",
+  "main.js": "./react/static/js/main.026442fb.chunk.js",
+  "main.js.map": "./react/static/js/main.026442fb.chunk.js.map",
+  "static/js/1.ee97a2b2.chunk.js": "./react/static/js/1.ee97a2b2.chunk.js",
+  "static/js/1.ee97a2b2.chunk.js.map": "./react/static/js/1.ee97a2b2.chunk.js.map",
+  "runtime~main.js": "./react/static/js/runtime~main.decc047a.js",
+  "runtime~main.js.map": "./react/static/js/runtime~main.decc047a.js.map",
+  "static/css/main.7fd6f7b6.chunk.css.map": "./react/static/css/main.7fd6f7b6.chunk.css.map",
+  "index.html": "./react/index.html",
+  "precache-manifest.5551b0dc35a1a3a830c39b193f1d741f.js": "./react/precache-manifest.5551b0dc35a1a3a830c39b193f1d741f.js",
+>>>>>>> master
   "service-worker.js": "./react/service-worker.js"
 }
