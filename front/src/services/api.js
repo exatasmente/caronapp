@@ -1,6 +1,6 @@
 import axios from "axios"
 import { getToken } from "./auth"
-import API_URL from "../configs/api"
+import { API_URL } from "../configs/api"
 const api = axios.create({ 
     baseURL: API_URL
 })

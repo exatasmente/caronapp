@@ -18,7 +18,7 @@ const Route = use('Route')
 const Helpers = use('Helpers');
 Route.group(() => {
     Route.get('/', 'ApiController.getCities');
-    Route.get('cliente', 'ClienteController.index')
+    Route.get('/cliente', 'ClienteController.index')
 
     Route.get('/', 'MotoristaController.index')
         .middleware(['auth','motorista'])
@@ -38,8 +38,8 @@ Route.group(() => {
 
 
 
-    Route.post('cadastro/cliente', 'ClienteController.store')
-    Route.post('cadastro/motorista', 'MotoristaController.store')
+    Route.post('/cliente/cadastro', 'ClienteController.store')
+    Route.post('/motorista/cadastro', 'MotoristaController.store')
     Route.post('/session', 'SessionController.create')
 
 }).prefix('api/v1');
