@@ -7,6 +7,9 @@ const Hash = use('Hash')
 const Model = use('Model')
 
 class User extends Model {
+  PAPEL_MOTORISTA = 1;
+  PAPEL_USUARIO = 2;
+
   static boot () {
     super.boot()
 
@@ -34,6 +37,15 @@ class User extends Model {
   tokens () {
     return this.hasMany('App/Models/Token')
   }
+  veiculo () {
+    if(this.papel == PAPEL_MOTORISTA){
+      return this.hasOne('App/Models/Veiculo')
+    }
+  }
+  viagens () {
+    return this.hasMany('App/Models/Viagem')
+  }
+ 
 }
 
 module.exports = User

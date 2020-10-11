@@ -17,3 +17,8 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
+Route.get('/test', ({ request, response, view }) => {
+    return 'Ola';
+
+  })
+Route.get('motoristas', 'MotoristaController.index')
