@@ -1,6 +1,6 @@
 'use strict'
 
-const User = require("../../Models/User")
+const User = use("App/Models/User")
 class MotoristaController {
     async index () {
         return await User.motoristas()
