@@ -15,22 +15,36 @@
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
+const Helpers = use('Helpers');
+Route.group(() => {
+    Route.get('/', 'ApiController.getCities');
+    Route.get('cliente', 'ClienteController.index')
 
-Route.get('/', ({ request, response }) => {
-    return 'Ola';
-})
-
-Route.get('cliente', 'ClienteController.index')
-
-Route.group('motorista',() =>{
     Route.get('/', 'MotoristaController.index')
+        .middleware(['auth','motorista'])
+        .prefix('motorista')
     Route.get('/veiculo', 'VeiculoController.index')
+        .middleware(['auth','motorista'])
+        .prefix('motorista')
     Route.post('/veiculo', 'VeiculoController.store')
+        .middleware(['auth','motorista'])
+        .prefix('motorista')
     Route.put('/veiculo', 'VeiculoController.update')
+        .middleware(['auth','motorista'])
+        .prefix('motorista')
     Route.delete('/veiculo', 'VeiculoController.delete')
+        .middleware(['auth','motorista'])
+        .prefix('motorista')
 
-}).middleware(['auth','motorista']).prefix('motorista')
 
-Route.post('cadastro/cliente', 'ClienteController.store')
-Route.post('cadastro/motorista', 'MotoristaController.store')
-Route.post('/session', 'SessionController.create')
+
+    Route.post('cadastro/cliente', 'ClienteController.store')
+    Route.post('cadastro/motorista', 'MotoristaController.store')
+    Route.post('/session', 'SessionController.create')
+
+}).prefix('api/v1');
+
+
+Route.any('*', ({ response }) => {
+    response.download(Helpers.publicPath('react/app.html'));
+});
