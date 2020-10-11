@@ -16,15 +16,21 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.on('/').render('welcome')
-Route.get('/test', ({ request, response, view }) => {
+Route.get('/', ({ request, response }) => {
     return 'Ola';
+})
 
-  })
-Route.get('motorista', 'MotoristaController.index')
-Route.get('veiculo/', 'VeiculoController.index')
-Route.get('veiculo/criar', 'VeiculoController.store')
+Route.get('cliente', 'ClienteController.index')
 
+Route.group('motorista',() =>{
+    Route.get('/', 'MotoristaController.index')
+    Route.get('/veiculo', 'VeiculoController.index')
+    Route.post('/veiculo', 'VeiculoController.store')
+    Route.put('/veiculo', 'VeiculoController.update')
+    Route.delete('/veiculo', 'VeiculoController.delete')
 
-Route.get('user/criar', 'UsuarioController.store')
-Route.get('cliente', 'UsuarioController.index')
+}).middleware(['auth','motorista']).prefix('motorista')
+
+Route.post('cadastro/cliente', 'ClienteController.store')
+Route.post('cadastro/motorista', 'MotoristaController.store')
+Route.post('/session', 'SessionController.create')

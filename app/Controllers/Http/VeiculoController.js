@@ -4,22 +4,70 @@ const User = use("App/Models/User")
 const Veiculo = use("App/Models/Veiculo")
 
 class VeiculoController {
- /**
-   * Return all Veiculos
-   */
-   async index () {
-    return Veiculo.all()
-  }
+    async index ({auth}) {
+        let user = await auth.getUser();
+        return await user.veiculo().fetch()
+    }
+   validate (data) {
+        return data.marca && data.modelo && data.placa && data.lugares;
+   }
+   async update ({request,response,auth}) {
+       try{
 
-  /**
-   * Create a new Veiculo
-   */
-   async store ({ request, response}) {
-    let data = request.only([ 'modelo', 'marca','placa','lugares','user_id'])
-    
-    data.lugares = parseInt(data.lugares)
+           let data = request.only([ 'modelo', 'marca','placa','lugares'])
+           let user = await auth.getUser();
+           let veiculo = await user.veiculo().fetch();
+           if(!veiculo){
+               return response.status(404).send({message : 'not found'})
+           }
+           if(user.role === User.PAPEL_USUARIO){
+               return response.status(403).send({message : 'Invalid User role'})
+           }
+           if(!this.validate(data)){
+               return response.status(400).send({message : 'Invalid Data'})
+           }
+           data.lugares = parseInt(data.lugares)
+           data.user_id = user.id;
+           veiculo.fillValues(data);
+           await veiculo.save();
+           return response.send(veiculo)
+       }catch(e){
+           if(e.code == 'E_MISSING_DATABASE_ROW'){
+               return response.status(422).send({'messsage' : 'Motorista não encontrado'})
+           }
+           return response.status(500)
+       }
+   }
+   async delete ({request,response,auth}) {
+       try{
+           let user = await auth.getUser();
+           if(user.role === User.PAPEL_USUARIO){
+               return response.status(403).send({message : 'Invalid User role'})
+           }
+           let veiculo = await user.veiculo().fetch();
+
+           return response.send(await veiculo.delete())
+       }catch(e){
+           if(e.code == 'E_MISSING_DATABASE_ROW'){
+               return response.status(422).send({'messsage' : 'Motorista não encontrado'})
+           }
+           return response.status(500)
+       }
+   }
+   async store ({ request, response,auth}) {
+
     try{
-        let user = await User.query().motoristas().where('id',data.user_id).firstOrFail()
+        let data = request.only([ 'modelo', 'marca','placa','lugares'])
+        let user = await auth.getUser();
+        if(user.role === User.PAPEL_USUARIO){
+            return response.status(403).send({message : 'Invalid User role'})
+        }
+        if(!this.validate(data)){
+            return response.status(400).send({message : 'Invalid Data'})
+        }
+
+        data.lugares = parseInt(data.lugares)
+        data.user_id = user.id;
         const veiculo = await Veiculo.create(data);    
         return response.send(veiculo)
     }catch(e){

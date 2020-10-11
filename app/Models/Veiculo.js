@@ -9,14 +9,11 @@ class Veiculo extends Model {
         return this.belongsTo('App/Models/User')
     }
 
-    async criar(userId,modelo,marca,placa,lugares) {
-        this.user_id = userId;
-        this.modelo = modelo
-        this.marca = marca
-        this.placa = placa
-        this.lugares =  lugares;
-        console.log(this.save())
-        await this.save();
+    fillValues(data){
+       this.modelo = data.modelo
+       this.marca = data.marca
+       this.placa = data.placa
+       this.lugares = data.lugares
     }
 
 }
