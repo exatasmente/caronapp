@@ -43,6 +43,9 @@ class User extends Model {
   viagens () {
     return this.hasMany('App/Models/Viagem')
   }
+  destinos (){
+    return this.hasMany('App/Models/Viagem')
+  }
 
   static scopeClientes (query) {
     return  query.where('role', User.PAPEL_USUARIO)

@@ -19,7 +19,7 @@ import {
   DatePicker
 
 } from 'rsuite';
-import { ROUTE_CLIENTE, ROUTE_MOTORISTA } from "../../configs/api";
+import { ROUTE_SINGUP } from "../../configs/api";
 
 const { StringType, DateType, NumberType } = Schema.Types;
 
@@ -97,7 +97,7 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentStep: 4,
+      currentStep: 1,
       formStep3: {
         first_name: '',
         last_name: '',
@@ -127,7 +127,7 @@ class SignUp extends Component {
         placa: '',
         lugares: ''
       },
-      driver: true,
+      driver: false,
       formError: {}
     };
     this.handleSignUp = this.handleSignUp.bind(this);
@@ -173,8 +173,8 @@ class SignUp extends Component {
       return (
         <Button onClick={this._next} appearance="primary">Avançar</Button>
       )
-    }else if (currentStep == 3 ){
-      return <Button onClick={this.state.driver ? this._next : this.handleSignUp} type={this.state.driver ? 'buttom' : 'submit'} appearance="primary">{this.state.driver ? "Cadastrar como Motorista" : "Cadastrar como Passageiro"}</Button>
+    }else if (currentStep == 3 || currentStep == 4 ){
+      return <Button onClick={this.state.driver && currentStep == 3 ? this._next : this.handleSignUp} type={this.state.driver ? 'buttom' : 'submit'} appearance="primary">{this.state.driver ? "Cadastrar como Motorista" : "Cadastrar como Passageiro"}</Button>
     }
     return null;
   }
@@ -185,13 +185,20 @@ class SignUp extends Component {
       console.error('Form Error');
       return;
     }
-    const { username, email, password } = this.state;
+    const { formStep1, formStep2, formStep3, formStep4, driver} = this.state;
     try {
-      let url = ROUTE_CLIENTE.cadastro;
-      if (!this.state.driver) {
-        url = ROUTE_MOTORISTA.cadastro
+      
+      let role = driver ? 1 : 2
+      let data = {
+        usuario : formStep3,
+        destino : formStep1,
+        viagem : formStep2,
+        veiculo : formStep4,
+        role : role,
+
+
       }
-      await api.post(url, { username, email, password }).then((response) => {
+      await api.post(ROUTE_SINGUP, data).then((response) => {
         if (response.status === 201) {
           this.props.history.push("/");
         }

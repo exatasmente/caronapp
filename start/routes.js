@@ -38,8 +38,7 @@ Route.group(() => {
 
 
 
-    Route.post('/cliente/cadastro', 'ClienteController.store')
-    Route.post('/motorista/cadastro', 'MotoristaController.store')
+    Route.post('/cadastro', 'AuthController.store')
     Route.post('/session', 'SessionController.create')
 
 }).prefix('api/v1');

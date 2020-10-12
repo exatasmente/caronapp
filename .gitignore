@@ -4,5 +4,5 @@ node_modules
 front/public
 front/node_modules
 front/build
-front/public/react
 .idea
+public/react
