@@ -4,15 +4,15 @@ import api from "../../services/api";
 
 import Logo from "../../logo.svg";
 
-import { Form, Container } from "./styles";
-import { API_URL, ROUTE_CLIENTE } from "../../configs/api";
-import { login } from "../../services/auth";
-
+import { Form, Container, CheckBox, CheckBoxWrapper ,CheckBoxLabel,Label } from "./styles";
+import { ROUTE_CLIENTE,ROUTE_MOTORISTA } from "../../configs/api";
+import  ToggleSwitch  from "../../components/ToggleSwitch";
 class SignUp extends Component {
   state = {
     username: "",
     email: "",
     password: "",
+    driver : false,
     error: ""
   };
 
@@ -23,10 +23,13 @@ class SignUp extends Component {
       this.setState({ error: "Preencha todos os dados para se cadastrar!" });
     } else {
       try {
-        await api.post(ROUTE_CLIENTE.cadastro, { username, email, password }).then((response)=>{
+        let url = ROUTE_CLIENTE.cadastro;
+        if(!this.state.driver){
+          url = ROUTE_MOTORISTA.cadastro
+        }
+        await api.post(url, { username, email, password }).then((response)=>{
           if(response.status === 201){
             this.props.history.push("/");
-          
           }
         });
   
@@ -58,6 +61,13 @@ class SignUp extends Component {
             placeholder="Senha"
             onChange={e => this.setState({ password: e.target.value })}
           />
+          <ToggleSwitch
+              onToggle={e => this.setState({ driver: !this.state.driver })}
+              bgToggled='green'
+              bgClear='gray'
+              outerLabel='Motorista'
+          />
+          
           <button type="submit">Cadastrar grátis</button>
           <hr />
           <Link to="/">Fazer login</Link>

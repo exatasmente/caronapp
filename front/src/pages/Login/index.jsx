@@ -59,7 +59,7 @@ class Login extends Component {
           />
           <button type="submit">Login</button>
           <hr />
-          <Link to="/">Novo aqui? Cadastrar-se.</Link>
+          <Link to="/cadastro">Novo aqui? Cadastrar-se.</Link>
         </Form>
       </Container>
     );
