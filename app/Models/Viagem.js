@@ -23,6 +23,12 @@ class Viagem extends Model {
     carona () {
         return this.belongsTo('App/Models/Carona')
     }
+
+    fillValues(data){
+        this.destino = data.destino
+        this.carona = data.carona
+    }
+
 }
 
 module.exports = Viagem

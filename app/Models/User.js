@@ -61,6 +61,15 @@ class User extends Model {
   static async motoristas () {
     return await User.query().where('role', User.PAPEL_MOTORISTA).fetch()
   }
+
+  fillValues(data){
+    this.username = data.username
+    this.first_name = data.first_name
+    this.last_name = data.last_name
+    this.password = data.password
+    this.email = data.email    
+  }
+ 
 }
  
 

@@ -64,8 +64,32 @@ class AuthController {
        }
         return response.status(201).send(responseData)
     }
+ 
+
+    ///index: Exibir um registro;
+    async index({request, response, auth}){
+        let user = await auth.getUser()
+        user.password = null;
+        return response.status(200).send(user)
+    }
 
 
+    //update: Alterar um registro;
+    async update({ request, response, auth }) {
+        let user = auth.getUser()
+        const userData = request.only(["usuario"])
+        user.fillValues(userData.usuario)       
+        await user.save()
+        return response.status(200).send(user)
+    }
+
+    //destroy: Remover um registro;
+    async delete ({ request, auth, response }) {
+        const userData = await auth.getUser()   
+        console.log(auth.getUser())   
+        await userData.delete()
+        return        
+    }
  
 }
 

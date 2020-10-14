@@ -13,6 +13,7 @@ class Carona extends Model {
     }
     
     
+    
 }
 
 module.exports = Carona

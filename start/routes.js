@@ -37,9 +37,31 @@ Route.group(() => {
         .prefix('motorista')
 
 
+  
 
-    Route.post('/cadastro', 'AuthController.store')
+    Route.resource('/usuario', 'AuthController')
+        .only(['index', 'update'])
+        .middleware(['auth'])
+
+     Route.resource('/veiculo', 'VeiculoController')
+        .only(['index', 'destroy'])
+        .middleware(['auth'])
+
+    Route.put('/veiculo','VeiculoController.update')
+        .middleware(['auth'])
+    
+    Route.resource('/viagem', 'ViagemController')
+        .only(['show', 'destroy', 'update', 'store','index']) 
+        .middleware(['auth'])
+        
+    Route.resource('/carona', 'CaronaController')
+        .only(['show', 'destroy', 'update','index'])
+        .middleware(['auth']) 
+
+    Route.delete('/usuario', 'AuthController.delete')    
+    Route.post('/cadastro','AuthController.store')
     Route.post('/session', 'SessionController.create')
+
 
 }).prefix('api/v1');
 
