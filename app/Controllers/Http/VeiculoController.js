@@ -9,12 +9,12 @@ class VeiculoController {
         return await user.veiculo().fetch()
     }
    validate (data) {
-        return data.marca && data.modelo && data.placa && data.lugares;
+        return data.fabricante && data.modelo && data.placa && data.lugares && data.ano;
    }
    async update ({request,response,auth}) {
        try{
 
-           let data = request.only([ 'modelo', 'marca','placa','lugares'])
+           let data = request.only([ 'modelo', 'fabricante','placa','lugares','ano'])
            let user = await auth.getUser();
            let veiculo = await user.veiculo().fetch();
            if(!veiculo){
@@ -28,9 +28,9 @@ class VeiculoController {
            }
            data.lugares = parseInt(data.lugares)
            data.user_id = user.id;
-           veiculo.fillValues(data);
+           veiculo.fillValues(data)
            await veiculo.save();
-           return response.send(veiculo)
+           return response.status(200).send(veiculo)
        }catch(e){
            if(e.code == 'E_MISSING_DATABASE_ROW'){
                return response.status(422).send({'messsage' : 'Motorista não encontrado'})
@@ -57,7 +57,7 @@ class VeiculoController {
    async store ({ request, response,auth}) {
 
     try{
-        let data = request.only([ 'modelo', 'marca','placa','lugares'])
+        let data = request.only([ 'modelo', 'fabricante','placa','lugares', 'ano'])
         let user = await auth.getUser();
         if(user.role === User.PAPEL_USUARIO){
             return response.status(403).send({message : 'Invalid User role'})
@@ -77,6 +77,8 @@ class VeiculoController {
         return response.status(500)
     }
   }
+
+
 }
 
 module.exports = VeiculoController

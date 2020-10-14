@@ -11,10 +11,12 @@ class Veiculo extends Model {
 
     fillValues(data){
        this.modelo = data.modelo
-       this.marca = data.marca
+       this.fabricante = data.fabricante
        this.placa = data.placa
        this.lugares = data.lugares
+       this.ano = data.ano
     }
+    
 
 }
 

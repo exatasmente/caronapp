@@ -10,7 +10,7 @@ class Carona extends Model {
     }
     passageiros () {
         return this.hasMany('App/Models/Viagem')
-    }
+    }  
     
     
 }
