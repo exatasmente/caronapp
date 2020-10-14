@@ -57,7 +57,7 @@ class VeiculoController {
    async store ({ request, response,auth}) {
 
     try{
-        let data = request.only([ 'modelo', 'fabricante','placa','lugares'])
+        let data = request.only([ 'modelo', 'fabricante','placa','lugares', 'ano'])
         let user = await auth.getUser();
         if(user.role === User.PAPEL_USUARIO){
             return response.status(403).send({message : 'Invalid User role'})
