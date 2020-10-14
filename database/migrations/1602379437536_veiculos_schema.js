@@ -7,9 +7,10 @@ class VeiculosSchema extends Schema {
   up () {
     this.create('veiculos', (table) => {
       table.increments()
-      table.string("marca")
+      table.string("fabricante")
       table.string("modelo")
       table.string("placa")
+      table.integer("ano")
       table.integer("lugares")
       table.integer('user_id')
         .references('id')
