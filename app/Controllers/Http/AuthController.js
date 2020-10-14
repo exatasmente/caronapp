@@ -73,22 +73,16 @@ class AuthController {
         return response.status(200).send(user)
     }
 
+    //update: Alterar um registro;
     async update({request,response,auth}){
         let user = auth.getUser();
         const userData = request.only(['usuario'])
         user.fill(userData.usuario);
         await user.save();
         return response.status(200).send(user);
-
-    //update: Alterar um registro;
-    async update({ request, response, auth }) {
-        let user = auth.getUser()
-        const userData = request.only(["usuario"])
-        user.fillValues(userData.usuario)       
-        await user.save()
-        return response.status(200).send(user)
     }
 
+    
     //destroy: Remover um registro;
     async delete ({ request, auth, response }) {
         const userData = await auth.getUser()   
