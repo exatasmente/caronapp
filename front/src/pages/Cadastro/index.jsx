@@ -97,7 +97,7 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentStep: 1,
+      currentStep: 3,
       formStep3: {
         first_name: '',
         last_name: '',
@@ -135,6 +135,10 @@ class SignUp extends Component {
     this.updateTime = this.updateTime.bind(this);
 
   }
+  clearFormErrors(){
+    const formError = {};
+    this.setState({formError : formError})
+  }
   _next = () => {
     let lastStep = this.state.driver ? 4 : 3;
     let currentStep = this.state.currentStep
@@ -143,6 +147,8 @@ class SignUp extends Component {
       this.setState({
         currentStep: currentStep
       })
+    }else{
+      this.clearFormErrors()
     }
   }
 
@@ -160,7 +166,7 @@ class SignUp extends Component {
     let currentStep = this.state.currentStep;
     if (currentStep > 1) {
       return (
-        <Link onClick={this._prev} >Voltar</Link>
+        <Link to={"#"} onClick={e =>{ e.preventDefault(); this._prev() }} >Voltar</Link>
       )
     }
     return null;
@@ -256,6 +262,7 @@ class SignUp extends Component {
     
   }
   _getCurrentFormState(){
+
     if (this.state.currentStep === 1) {
       return this.state.formStep1
     } else if (this.state.currentStep === 2) {
@@ -280,6 +287,7 @@ class SignUp extends Component {
   render() {
     const formValue = this._getCurrentFormState()
     const model = this._getCurrentFormModel()
+
     return (
       <Container>
         <Content>
@@ -300,7 +308,7 @@ class SignUp extends Component {
                   fluid>
                   {this.getCurrentStep()}
                   <FormGroup>
-                    <ButtonToolbar>
+                    <ButtonToolbar style={{padding: '1rem', marginTop : '2rem' }}>
                       {this.previousButton()}
                       {this.nextButton()}
                     </ButtonToolbar>

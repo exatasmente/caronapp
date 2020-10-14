@@ -29,7 +29,7 @@ class Login extends Component {
             console.log(response.body)
             
             login(response.data.token);
-            this.props.history.push("/app");           
+            this.props.history.push("/home");
           
           }
         });
