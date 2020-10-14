@@ -65,7 +65,14 @@ class AuthController {
         return response.status(201).send(responseData)
     }
 
+    async update({request,response,auth}){
+        let user = auth.getUser();
+        const userData = request.only(['usuario'])
+        user.fill(userData.usuario);
+        await user.save();
+        return response.status(200).send(user);
 
+    }
  
 }
 
