@@ -7,7 +7,7 @@ class CreateViagemSchema extends Schema {
   up () {
     this.create('viagens', (table) => {
       table.increments()
-      
+      table.integer('status')
       table.integer('user_id')
         .references('id')
         .inTable('users')

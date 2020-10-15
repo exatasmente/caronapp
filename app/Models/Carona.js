@@ -4,12 +4,18 @@
 const Model = use('Model')
 
 class Carona extends Model {
+    static get table () {
+        return 'caronas'
+    }
     
-    viagemMotorista () {
-        return this.hasOne('App/Models/Viagem')
+    viagem () {
+        return this.hasOne('App/Models/Viagem','viagem_id','id')
     }
     passageiros () {
-        return this.hasMany('App/Models/Viagem')
+        return this.hasMany('App/Models/Viagem', 'viagem_id','id')
+    }  
+    solicitacoes(){
+        return this.hasMany("App/Models/Solicitacao")
     }  
     
     
