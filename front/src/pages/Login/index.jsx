@@ -25,10 +25,7 @@ class Login extends Component {
         await api.post(ROUTE_CLIENTE.login, { username, password }).then((response)=>{
           if(response.status === 201){
             console.log(response.data)
-            console.log(response.token)            
-            console.log(response.body)
-            
-            login(response.data.token);
+            login(response.data.token,response.data.role);
             this.props.history.push("/home");
           
           }

@@ -15,7 +15,7 @@ class Carona extends Model {
         return this.hasMany('App/Models/Viagem', 'viagem_id','id')
     }  
     solicitacoes(){
-        return this.hasMany("App/Models/Solicitacao")
+        return this.hasMany("App/Models/Solicitacao",'id','carona_id')
     }  
     
     

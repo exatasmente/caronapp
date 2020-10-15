@@ -9,7 +9,7 @@ class Solicitacao extends Model {
     }
     
     viagem(){
-        return this.hasOne("App/Models/Viagem")
+        return this.hasOne("App/Models/Viagem",'viagem_id','id')
     }
 
     carona(){

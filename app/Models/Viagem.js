@@ -16,7 +16,7 @@ class Viagem extends Model {
       }
 
     solicitacoes(){
-        return this.hasMany("App/Models/Solicitacao")
+        return this.hasMany("App/Models/Solicitacao",'id','viagem_id')
     }  
     destino () {
         return this.hasOne('App/Models/Destino', 'destino_id', 'id')//tem um
@@ -25,14 +25,13 @@ class Viagem extends Model {
         return this.belongsTo('App/Models/User', 'id', 'user_id')//pertence a
     }
     carona () {
-        return this.belongsTo('App/Models/Carona', 'id', 'carona_id')
+        return this.belongsTo('App/Models/Carona', 'carona_id', 'id')
     }
 
     fillValues(data){
 
-        this.date = data.date
-        console.log(data)
-        this.pessoas = data.pessoas   
+        this.date = new Date(data.date)
+        this.pessoas =  !isNaN(parseInt(data.pessoas)) ? parseInt(data.pessoas) : 0
     }
 }
 
