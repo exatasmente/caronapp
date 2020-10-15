@@ -11,9 +11,11 @@ class CreateCaronasSchema extends Schema {
       table.integer("viagem_id").unsigned()
       .references('id')
       .inTable('viagens')
-      table.string('status')
-      table.integer('locacao')
-
+      table.integer('lotacao')
+      table.integer('vagas')
+      table.integer('user_id').unsigned()
+        .references('id')
+        .inTable('users')
       table.timestamps()
     })
   }

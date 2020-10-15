@@ -38,13 +38,13 @@ class User extends Model {
     return this.hasMany('App/Models/Token')
   }
   veiculo () {
-      return this.hasOne('App/Models/Veiculo')
+      return this.hasOne('App/Models/Veiculo', 'id','user_id')
   }
   viagens () {
-    return this.hasMany('App/Models/Viagem')
+    return this.hasMany('App/Models/Viagem', 'id','user_id')
   }
   destinos (){
-    return this.hasMany('App/Models/Viagem')
+    return this.hasMany('App/Models/Destino', 'id','user_id')
   }
 
   static scopeClientes (query) {

@@ -3,7 +3,7 @@ const User = use("App/Models/User")
 const Viagem = use("App/Models/Viagem")
 const Veiculo = use("App/Models/Veiculo")
 const Destino = use("App/Models/Destino")
-
+const Event = use("Event")
 
 
 
@@ -39,30 +39,33 @@ class AuthController {
             await usuario.save()
         }
         
-        const viagemData = request.only(["viagem", "destino"])
+        let viagemData = request.only(["viagem", "destino"])
        
         let destino = new Destino()
         destino.user_id = usuario.id
-        destino.line_1 = viagemData.destino.line_1
-        destino.line_2 = viagemData.destino.line_2
-        destino.city = viagemData.destino.city
-        destino.state = viagemData.destino.state
-        destino.zipcode = viagemData.destino.zipcode
+        destino.fillValues(viagemData.destino)
+        await destino.save()
+        
         let viagem = new Viagem()
         viagem.user_id = usuario.id
-        viagem.date = new Date(viagemData.viagem.date)
-        viagem.pessoas = viagemData.viagem.pessoas
+        viagemData.viagem.date = new Date(viagemData.viagem.date)
+        viagemData.viagem.pessoas = parseInt(viagemData.viagem.pessoas)
         viagem.destino_id = destino.id
+        viagem.fillValues(viagemData.viagem)
         await viagem.save()
+        await viagem.load("destino")     
         
-        
-        
-
-       let responseData = { "user" : usuario, "destino" : destino, "viagem" : viagem}
+       let responseData = { "user" : usuario, "viagem" : viagem}
        if(veiculo != null){
         responseData.veiculo = veiculo
        }
-        return response.status(201).send(responseData)
+       try{
+        Event.fire('new::viagem', viagem,usuario,destino)
+       }catch(e){
+        return response.status(201).send(e)
+       }
+       
+       return response.status(201).send(responseData)
     }
  
 
