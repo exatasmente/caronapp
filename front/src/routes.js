@@ -6,14 +6,16 @@ import Caronas from "./pages/Caronas";
 import Perfil from "./pages/Perfil";
 import Veiculo from "./pages/Veiculo";
 import Home from "./pages/Home";
-import { isAuthenticated } from "./services/auth";
+import {getRole, isAuthenticated, logout} from "./services/auth";
+
 import {
     Nav,
     Icon,
     Container,
     Sidebar,
     Sidenav,
-    Content
+    Content,
+    Notification
 } from "rsuite";
 
 
@@ -26,6 +28,13 @@ const headerStyles = {
     whiteSpace: 'nowrap',
     overflow: 'hidden'
 };
+
+export const showNotification = (type,message) => {
+    Notification[type]({
+        title: type,
+        description: <Content>{message}</Content>
+    });
+}
 
 
 const iconStyles = {
@@ -48,23 +57,28 @@ const AppLayout = ({children, ...rest}) => {
                 >
                     <Sidenav.Header>
                         <div style={headerStyles}>
-                            <Icon icon="logo-analytics" size="lg" style={{ verticalAlign: 0 }} />
-                            <span style={{ marginLeft: 12 }}> BRAND</span>
+                            Car-OnAPP
                         </div>
                     </Sidenav.Header>
             <Sidenav.Body>
                 <Nav>
-                    <Nav.Item eventKey="1" active icon={<Icon icon="dashboard" />} href={"/home"}>
+                    <Nav.Item eventKey="1" active icon={<Icon icon="home"/>} href={"/home"}>
                         Home
                     </Nav.Item>
-                    <Nav.Item eventKey="2" icon={<Icon icon="group" />} href={"/caronas"}>
-                        Caronas
+
+                    <Nav.Item eventKey="2" icon={<Icon icon="road"/>} href={"/caronas"}>
+                        {getRole() == 1  ? 'Caronas' : 'Viagens' }
                     </Nav.Item>
-                    <Nav.Item eventKey="3" icon={<Icon icon="group" />} href={"/veiculo"}>
+                    {getRole() == 1 &&
+                    <Nav.Item eventKey="3" icon={<Icon icon="car"/>} href={"/veiculo"}>
                         Veiculos
                     </Nav.Item>
-                    <Nav.Item eventKey="4" icon={<Icon icon="group" />} href={"/perfil"}>
+                    }
+                    <Nav.Item eventKey="4" icon={<Icon icon="avatar" />} href={"/perfil"}>
                         Perfil
+                    </Nav.Item>
+                    <Nav.Item eventKey="4" icon={<Icon icon="off" />} href={"#"} onClick={() =>{logout() }}>
+                        Sair
                     </Nav.Item>
                 </Nav>
             </Sidenav.Body>

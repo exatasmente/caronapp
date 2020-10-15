@@ -97,7 +97,7 @@ class SignUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentStep: 3,
+      currentStep: 1,
       formStep3: {
         first_name: '',
         last_name: '',
@@ -196,9 +196,9 @@ class SignUp extends Component {
       
       let role = driver ? 1 : 2
       let data = {
+        viagem : formStep1,
+        destino : formStep2,
         usuario : formStep3,
-        destino : formStep1,
-        viagem : formStep2,
         veiculo : formStep4,
         role : role,
 

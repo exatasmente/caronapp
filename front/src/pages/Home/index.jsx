@@ -15,7 +15,7 @@ class Home extends Component {
         return (
             <Container>
                 <Header>
-                    <h2>Page Title</h2>
+                    <h2>Home</h2>
                 </Header>
                 <Content>Content</Content>
             </Container>

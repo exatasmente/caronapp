@@ -13,7 +13,7 @@ class Veiculo extends Model {
        this.modelo = data.modelo
        this.fabricante = data.fabricante
        this.placa = data.placa
-       this.lugares = data.lugares
+       this.lugares = !isNaN(parseInt(data.lugares)) ? parseInt(data.lugares) : 5
        this.ano = data.ano
     }
     

@@ -11,7 +11,15 @@ class ViagemController {
 
     async index({ auth }) {
         let user = await auth.getUser();
-        return await user.viagens().with("destino").fetch()
+        const query =user.viagens().with("destino").with("carona")
+        if(user.role === User.PAPEL_MOTORISTA){
+            query.with('carona.solicitacoes');
+            query.with('carona.solicitacoes.viagem')
+        }else{
+                query.with('solicitacoes');
+        }
+
+        return await query.fetch()
 
     }
 
@@ -70,7 +78,6 @@ class ViagemController {
         await viagem.save()
 
         Event.fire('new::viagem',viagem,user,destino)
-        
 
         return response.send(viagem)
 

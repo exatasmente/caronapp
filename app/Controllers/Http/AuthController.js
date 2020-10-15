@@ -20,22 +20,15 @@ class AuthController {
         let veiculo = null;
         if(userData.role == User.PAPEL_MOTORISTA){
             usuario.role = User.PAPEL_MOTORISTA
-            
             await usuario.save()
-            const veiculoData = request.only("veiculo")
+            const veiculoData = request.only(["veiculo"])
             veiculo = new Veiculo()
             veiculo.user_id = usuario.id
-            console.log(veiculoData)
-            veiculo.fabricante = veiculoData.veiculo.fabricante
-            veiculo.modelo = veiculoData.veiculo.modelo
-            veiculo.ano = veiculoData.veiculo.ano
-            veiculo.placa = veiculoData.veiculo.placa
-            veiculo.lugares = veiculoData.veiculo.lugares
+            veiculo.fillValues(veiculoData.veiculo);
             await veiculo.save()
 
-    
         }else{
-            usuario.role = User.PAPEL_CLIENTE
+            usuario.role = User.PAPEL_USUARIO
             await usuario.save()
         }
         
@@ -48,28 +41,18 @@ class AuthController {
         
         let viagem = new Viagem()
         viagem.user_id = usuario.id
-        viagemData.viagem.date = new Date(viagemData.viagem.date)
-        viagemData.viagem.pessoas = parseInt(viagemData.viagem.pessoas)
         viagem.destino_id = destino.id
         viagem.fillValues(viagemData.viagem)
         await viagem.save()
-        await viagem.load("destino")     
-        
+        await viagem.load("destino")
        let responseData = { "user" : usuario, "viagem" : viagem}
        if(veiculo != null){
         responseData.veiculo = veiculo
        }
-       try{
-        Event.fire('new::viagem', viagem,usuario,destino)
-       }catch(e){
-        return response.status(201).send(e)
-       }
-       
+       Event.fire('new::viagem', viagem,usuario,destino)
        return response.status(201).send(responseData)
     }
- 
 
-    ///index: Exibir um registro;
     async index({request, response, auth}){
         let user = await auth.getUser()
         user.password = null;
