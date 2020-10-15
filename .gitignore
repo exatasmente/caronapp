@@ -1,8 +1,5 @@
 .env
 database/development.sqlite
 node_modules
-front/public
 front/node_modules
-front/build
 .idea
-public/react
