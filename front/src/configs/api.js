@@ -1,4 +1,4 @@
-export const API_URL = "http://localhost:3333/api/v1/"
+export const API_URL = "http://car-onapp.herokuapp.com/api/v1/"
 export const ROUTE_SINGUP = "cadastro"
 
 export const ROUTE_CLIENTE = {
